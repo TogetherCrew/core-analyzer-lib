@@ -1,4 +1,4 @@
-from python_library import Sample
+from analyzer import Sample
 
 
 def test_random_computations_have_results():

@@ -6,3 +6,4 @@ python-dotenv==0.21.1
 tc_messageBroker==1.4.0
 pymongo==4.3.3
 neo4j==5.8.0
+networkx==3.1

@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class Activity(Enum):
+class Activity:
     """
     enum class
     """

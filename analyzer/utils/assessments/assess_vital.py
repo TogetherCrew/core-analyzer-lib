@@ -38,6 +38,7 @@ def assess_vital(
     """
 
     # if there are more time periods in the past than CON_T_THR
+    # checking non-verlapping periods
     if w_i - VITAL_O_THR * WINDOW_D >= 0:
         # obtain who was connected in all specified time periods and was engaged
         all_vital[str(w_i)] = set(

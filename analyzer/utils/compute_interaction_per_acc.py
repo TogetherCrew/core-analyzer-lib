@@ -9,7 +9,7 @@ from .generate_graph import make_graph
 
 
 def thr_int(
-    int_mat: dict[Activity, np.ndarray],
+    int_mat: dict[str, np.ndarray],
     INT_THR: int,
     UW_DEG_THR: int,
     EDGE_STR_THR: int,
@@ -22,7 +22,7 @@ def thr_int(
 
     Parameters:
     ------------
-    int_mat : dict[Activity, np.ndarray[int]]
+    int_mat : dict[str, np.ndarray[int]]
         dictionary of keys as activities and values as
         2D weighted directed interaction matrix
     INT_THR : int

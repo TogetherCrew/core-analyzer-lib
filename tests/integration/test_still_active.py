@@ -1,5 +1,6 @@
 # test all_active members using the interaction matrix
 import numpy as np
+
 from analyzer.assess_engagement import assess_engagement
 from analyzer.utils.activity import Activity
 

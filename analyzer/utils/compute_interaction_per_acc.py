@@ -1,8 +1,8 @@
 import copy
-from typing import Any
 
 import numpy as np
 import numpy.typing as npt
+from networkx import DiGraph
 
 from .activity import Activity
 from .generate_graph import make_graph
@@ -15,10 +15,7 @@ def thr_int(
     EDGE_STR_THR: int,
     UW_THR_DEG_THR: int,
 ) -> tuple[
-    npt.NDArray[np.int32],
-    npt.NDArray[np.int32],
-    npt.NDArray[np.int32],
-    Any,
+    npt.NDArray[np.int32], npt.NDArray[np.int32], npt.NDArray[np.int32], DiGraph
 ]:
     """
     Computes number of interactions and connections per account
@@ -49,6 +46,8 @@ def thr_int(
         index numbers of account names with at
         least UW_THR_DEG_THR connections of at least EDGE_STR_THR
         interactions each
+    graph : networkx.DiGraph
+        the network graph of active members
     """
 
     # # # SELECT DATA FROM INT_MAT # # #

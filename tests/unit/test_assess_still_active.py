@@ -10,7 +10,7 @@ def test_still_active():
     all_active: dict[str, set[str]] = {
         "0": set(["user0", "user2", "user4"]),
         "1": set(["user1", "user2", "user3", "user4", "user5"]),
-        "2": set(["user6", "user3", "user4"]),
+        "2": set(["user6", "user3", "user4", "user7"]),
     }
     all_still_active: dict[str, set[str]] = {
         "0": set([]),

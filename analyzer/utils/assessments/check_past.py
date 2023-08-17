@@ -27,7 +27,7 @@ def check_past(
     """
 
     # initiate empty result list
-    acc_per_period = [None] * t_thr
+    acc_per_period = []
 
     # obtain dictionary keys
     dic_keys = list(data_dic.keys())
@@ -37,11 +37,11 @@ def check_past(
         # if time period is present in dic_keys
         if len(dic_keys) >= -(-1 - (p * WINDOW_D)):
             # obtain accounts in period
-            acc_per_period[p] = list(data_dic[str(dic_keys[-1 - (p * WINDOW_D)])])
+            acc_per_period.append(list(data_dic[str(dic_keys[-1 - (p * WINDOW_D)])]))
 
         else:
             # store empty values
-            acc_per_period[p] = list("")
+            acc_per_period.append([])
 
     # merge values in list of list into single list
     all_acc_list = [elem for sublist in acc_per_period for elem in sublist]

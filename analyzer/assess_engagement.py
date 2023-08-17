@@ -5,11 +5,17 @@
 #
 #  Author Ene SS Rawa / Tjitse van der Molen
 
-from .utils.assessments import (assess_active, assess_connected,
-                                assess_consistent, assess_dropped,
-                                assess_lurker, assess_overlap,
-                                assess_remainder, assess_still_active,
-                                assess_vital)
+from .utils.assessments import (
+    assess_active,
+    assess_connected,
+    assess_consistent,
+    assess_dropped,
+    assess_lurker,
+    assess_overlap,
+    assess_remainder,
+    assess_still_active,
+    assess_vital,
+)
 from .utils.compute_interaction_per_acc import thr_int
 
 

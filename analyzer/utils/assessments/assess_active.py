@@ -1,8 +1,8 @@
-from numpy import intersect1d
+from numpy import intersect1d, ndarray
 
 
 def assess_active(
-    acc_names: list[str],
+    acc_names: ndarray,
     thr_ind: list[str],
     thr_uw_deg: list[str],
     w_i: int,
@@ -13,7 +13,7 @@ def assess_active(
 
     Parameters:
     -------------
-    acc_names : list[str]
+    acc_names : np.ndarray[str]
         all active accounts in window
     thr_ind : list[int]
         index numbers of account names with at least

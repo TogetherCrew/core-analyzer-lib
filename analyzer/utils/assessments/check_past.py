@@ -3,7 +3,7 @@ from collections import Counter
 
 def check_past(
     data_dic: dict[str, set[str]], t_thr: int, o_thr: int, WINDOW_D: int
-) -> list[str]:
+) -> set[str]:
     """
     Checks in how many previous periods account names were in a dict
 
@@ -21,7 +21,7 @@ def check_past(
 
     Returns:
     ---------
-    acc_selection : list[str]
+    acc_selection : set[str]
         all accounts that were present in data_dic
         for more than `o_thr` times within the last `t_thr` periods
     """
@@ -50,7 +50,7 @@ def check_past(
     acc_cnt_dict = Counter(all_acc_list)
 
     # obtain account names that with at least o_thr occurences in all_acc_list
-    acc_selection = set(
+    acc_selection: set[str] = set(
         [acc for acc, occurrences in acc_cnt_dict.items() if occurrences >= o_thr]
     )
 

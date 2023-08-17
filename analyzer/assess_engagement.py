@@ -5,18 +5,12 @@
 #
 #  Author Ene SS Rawa / Tjitse van der Molen
 
-from .utils.assessments import (
-    assess_connected,
-    assess_active,
-    assess_consistent,
-    assess_vital,
-    assess_still_active,
-    assess_dropped,
-    assess_overlap,
-    assess_remainder,
-    assess_lurker,
-    thr_int,
-)
+from .utils.assessments import (assess_active, assess_connected,
+                                assess_consistent, assess_dropped,
+                                assess_lurker, assess_overlap,
+                                assess_remainder, assess_still_active,
+                                assess_vital)
+from .utils.compute_interaction_per_acc import thr_int
 
 
 def assess_engagement(
@@ -181,7 +175,7 @@ def assess_engagement(
             rem_new_disengaged[str(w_i)],
             all_disengaged_were_vital[str(w_i)],
         ) = assess_overlap(
-            all_new_disengaged, all_vital, str(w_i), (act_param[2] + 1) * WINDOW_D
+            all_new_disengaged, all_vital, w_i, (act_param[2] + 1) * WINDOW_D
         )
 
         # assess who of the remaining disengaged accounts
@@ -190,7 +184,7 @@ def assess_engagement(
             rem_new_disengaged[str(w_i)],
             all_disengaged_were_consistently_active[str(w_i)],
         ) = assess_overlap(
-            rem_new_disengaged, all_consistent, str(w_i), (act_param[2] + 1) * WINDOW_D
+            rem_new_disengaged, all_consistent, w_i, (act_param[2] + 1) * WINDOW_D
         )
 
         # assess who of the remaining disengaged accounts
@@ -199,7 +193,7 @@ def assess_engagement(
             rem_new_disengaged[str(w_i)],
             all_disengaged_were_newly_active[str(w_i)],
         ) = assess_overlap(
-            rem_new_disengaged, all_new_active, str(w_i), (act_param[2] + 1) * WINDOW_D
+            rem_new_disengaged, all_new_active, w_i, (act_param[2] + 1) * WINDOW_D
         )
     else:
         all_disengaged_were_vital[str(w_i)] = set()

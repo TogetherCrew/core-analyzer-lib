@@ -1,5 +1,8 @@
+import numpy as np
+
+
 def assess_connected(
-    acc_names: list[str],
+    acc_names: np.ndarray,
     thr_uw_thr_deg: list[int],
     w_i: int,
     all_connected: dict[str, set[str]],
@@ -9,8 +12,9 @@ def assess_connected(
 
     Parameters:
     ------------
-    acc_names : list[str]
+    acc_names : np.ndarray[str]
         all active accounts in window
+        the account names are string
     thr_uw_thr_deg : list[int]
         index numbers of account names with at
         least `UW_THR_DEG_THR` connections of at least `EDGE_STR_THR`

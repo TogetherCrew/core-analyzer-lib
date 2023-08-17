@@ -1,4 +1,4 @@
-from check_past import check_past
+from .check_past import check_past
 
 
 def assess_vital(

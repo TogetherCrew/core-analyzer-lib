@@ -1,8 +1,10 @@
 import copy
+from typing import Any
 
 import numpy as np
-from activity import Activity
-from generate_graph import make_graph
+
+from .activity import Activity
+from .generate_graph import make_graph
 
 
 def thr_int(
@@ -11,7 +13,12 @@ def thr_int(
     UW_DEG_THR: int,
     EDGE_STR_THR: int,
     UW_THR_DEG_THR: int,
-) -> tuple[list[int], list[int], list[int]]:
+) -> tuple[
+    np.ndarray[Any, np.dtype[np.signedinteger[Any]]],
+    np.ndarray[Any, np.dtype[np.signedinteger[Any]]],
+    np.ndarray[Any, np.dtype[np.signedinteger[Any]]],
+    Any,
+]:
     """
     Computes number of interactions and connections per account
 
@@ -91,4 +98,4 @@ def thr_int(
     # compare total unweighted node degree after thresholding to threshold
     thr_uw_thr_deg = np.where(all_degrees_thresh > UW_THR_DEG_THR)[0]
 
-    return [thr_ind, thr_uw_deg, thr_uw_thr_deg, graph]
+    return (thr_ind, thr_uw_deg, thr_uw_thr_deg, graph)

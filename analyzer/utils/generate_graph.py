@@ -1,8 +1,8 @@
-from networkx import from_numpy_array, DiGraph
 import numpy as np
+from networkx import DiGraph, from_numpy_array
 
 
-def make_graph(matrix: np.ndarray):
+def make_graph(matrix: np.ndarray) -> DiGraph:
     """
     Turns interaction matrix into a directed graph object
 

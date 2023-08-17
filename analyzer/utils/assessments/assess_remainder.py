@@ -1,5 +1,5 @@
-from check_prev_period import check_prev_period
-from check_past import check_past
+from .check_past import check_past
+from .check_prev_period import check_prev_period
 
 
 def assess_remainder(
@@ -186,7 +186,7 @@ def assess_remainder(
         all_disengaged[str(w_i)] = set("")
         all_disengaged_in_past[str(w_i)] = set("")
 
-    return [
+    return (
         all_new_active,
         all_unpaused,
         all_returned,
@@ -194,4 +194,4 @@ def assess_remainder(
         all_new_disengaged,
         all_disengaged,
         all_disengaged_in_past,
-    ]
+    )

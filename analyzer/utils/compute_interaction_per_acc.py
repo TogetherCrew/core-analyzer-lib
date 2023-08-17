@@ -2,6 +2,7 @@ import copy
 from typing import Any
 
 import numpy as np
+import numpy.typing as npt
 
 from .activity import Activity
 from .generate_graph import make_graph
@@ -14,9 +15,9 @@ def thr_int(
     EDGE_STR_THR: int,
     UW_THR_DEG_THR: int,
 ) -> tuple[
-    np.ndarray[Any, np.dtype[np.signedinteger[Any]]],
-    np.ndarray[Any, np.dtype[np.signedinteger[Any]]],
-    np.ndarray[Any, np.dtype[np.signedinteger[Any]]],
+    npt.NDArray[np.int32],
+    npt.NDArray[np.int32],
+    npt.NDArray[np.int32],
     Any,
 ]:
     """
@@ -38,13 +39,13 @@ def thr_int(
 
     Returns:
     ---------
-    thr_ind : list[int]
+    thr_ind : npt.NDArray[np.int32]
         index numbers of account names with at least
         INT_THR interactions
-    thr_uw_deg : list[int]
+    thr_uw_deg : npt.NDArray[np.int32]
         index numbers of account names with at least
         UW_DEG_THR connections
-    thr_uw_thr_deg : list[int]
+    thr_uw_thr_deg : npt.NDArray[np.int32]
         index numbers of account names with at
         least UW_THR_DEG_THR connections of at least EDGE_STR_THR
         interactions each

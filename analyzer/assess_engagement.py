@@ -5,7 +5,7 @@
 #
 #  Author Ene SS Rawa / Tjitse van der Molen
 
-from .utils.assessments import ( # isort: skip
+from .utils.assessments import (  # isort: skip
     assess_active,
     assess_connected,
     assess_consistent,

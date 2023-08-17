@@ -1,5 +1,4 @@
 import numpy as np
-
 from analyzer.assess_engagement import assess_engagement
 from analyzer.utils.activity import Activity
 
@@ -43,10 +42,10 @@ def test_disengaged_were_vital():
 
     acc_names = np.array(acc_names)
 
-    ## four weeks
+    # four weeks
     max_interval = 42
 
-    ## preparing empty joined members dict
+    # preparing empty joined members dict
     all_joined = dict(
         zip(np.array(range(max_interval), dtype=str), np.repeat(set(), max_interval))
     )
@@ -80,8 +79,8 @@ def test_disengaged_were_vital():
         Activity.Mention: np.zeros((acc_count, acc_count)),
         Activity.Reaction: np.zeros((acc_count, acc_count)),
     }
-    ## `user_0` intracting with `user_1`, `user_2`, `user_3`, `user_4`, `user_5`
-    ## at least 5 times was needed
+    # `user_0` intracting with `user_1`, `user_2`, `user_3`, `user_4`, `user_5`
+    # at least 5 times was needed
     int_mat[Activity.Reaction][0, 1] = 6
     int_mat[Activity.Reaction][0, 2] = 6
     int_mat[Activity.Reaction][0, 3] = 6
@@ -89,9 +88,9 @@ def test_disengaged_were_vital():
     int_mat[Activity.Reaction][0, 5] = 6
     int_mat[Activity.Reaction][0, 6] = 6
 
-    ## the analytics
+    # the analytics
     for w_i in range(max_interval):
-        ## time window
+        # time window
         WINDOW_D = 7
 
         (_, *activity_dict) = assess_engagement(
@@ -105,9 +104,9 @@ def test_disengaged_were_vital():
 
         activity_dict = dict(zip(activities, activity_dict))
 
-        ## zeroing all the activities for w_i == 22
-        ## we would have the all_disengaged_were_vital on day (22 + 7) = 29
-        ## we assumed -1 period as 7 days and the zeroth period would be day w_i = 29
+        # zeroing all the activities for w_i == 22
+        # we would have the all_disengaged_were_vital on day (22 + 7) = 29
+        # we assumed -1 period as 7 days and the zeroth period would be day w_i = 29
         if w_i == 21:
             int_mat[Activity.Reaction][0, 1] = 0
             int_mat[Activity.Reaction][0, 2] = 0

@@ -1,5 +1,4 @@
 import numpy as np
-
 from analyzer.assess_engagement import assess_engagement
 from analyzer.utils.activity import Activity
 
@@ -89,9 +88,9 @@ def test_mention_active_members_from_int_matrix():
     # `user_0` mentioning `user_1`
     int_mat[Activity.Mention][0, 1] = 2
 
-    ## the analytics
+    # the analytics
     for w_i in range(max_interval):
-        ## time window
+        # time window
         WINDOW_D = 7
 
         (_, *activity_dict) = assess_engagement(
@@ -104,8 +103,8 @@ def test_mention_active_members_from_int_matrix():
         )
 
         activity_dict = dict(zip(activities, activity_dict))
-        ## zeroing it on the day 7
-        ## we should have it all_disengaged_were_newly_active in day 7 + 7
+        # zeroing it on the day 7
+        # we should have it all_disengaged_were_newly_active in day 7 + 7
         if w_i == 6:
             int_mat[Activity.Mention][0, 1] = 0
 

@@ -1,5 +1,4 @@
 import numpy as np
-
 from analyzer.assess_engagement import assess_engagement
 from analyzer.utils.activity import Activity
 
@@ -15,10 +14,10 @@ def test_newly_active_continuous_period():
 
     acc_names = np.array(acc_names)
 
-    ## four weeks
+    # four weeks
     max_interval = 28
 
-    ## preparing empty joined members dict
+    # preparing empty joined members dict
     all_joined = dict(
         zip(np.array(range(max_interval), dtype=str), np.repeat(set(), max_interval))
     )
@@ -83,12 +82,12 @@ def test_newly_active_continuous_period():
         Activity.Reaction: np.zeros((acc_count, acc_count)),
     }
 
-    ## `user_1` intracting with `user_2`
+    # `user_1` intracting with `user_2`
     int_mat[Activity.Reaction][0, 1] = 2
 
-    ## the analytics
+    # the analytics
     for w_i in range(max_interval):
-        ## time window
+        # time window
         WINDOW_D = 7
 
         (_, *activity_dict) = assess_engagement(
@@ -101,8 +100,8 @@ def test_newly_active_continuous_period():
         )
 
         activity_dict = dict(zip(activities, activity_dict))
-        ## zeroing it on the day 7
-        ## we should have it all_disengaged_were_newly_active in day 7 + 7
+        # zeroing it on the day 7
+        # we should have it all_disengaged_were_newly_active in day 7 + 7
         if w_i == 6:
             int_mat[Activity.Reaction][0, 1] = 0
 

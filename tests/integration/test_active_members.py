@@ -1,5 +1,4 @@
 import numpy as np
-
 from analyzer.assess_engagement import assess_engagement
 from analyzer.utils.activity import Activity
 
@@ -43,7 +42,7 @@ def test_no_active():
 
     WINDOW_D = 7
 
-    ## window index
+    # window index
     w_i = 0
 
     INT_THR = 1  # minimum number of interactions to be active
@@ -148,9 +147,9 @@ def test_single_active():
         "all_about_to_disengage": {},
         "all_disengaged_in_past": {},
     }
-    ## time window
+    # time window
     WINDOW_D = 7
-    ## window index
+    # window index
     w_i = 0
 
     INT_THR = 1  # minimum number of interactions to be active

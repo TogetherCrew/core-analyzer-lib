@@ -1,5 +1,4 @@
 import numpy as np
-
 from analyzer.assess_engagement import assess_engagement
 from analyzer.utils.activity import Activity
 
@@ -91,11 +90,11 @@ def test_all_active_fourteen_period():
         Activity.Reaction: np.zeros((acc_count, acc_count)),
     }
 
-    ## from day zero user0 and user1 are active
+    # from day zero user0 and user1 are active
     int_mat[Activity.Reaction][0, 1] = 1
     int_mat[Activity.Reaction][1, 0] = 2
 
-    ## two weeks represantative of 14 days
+    # two weeks represantative of 14 days
     for day_i in range(14):
         if day_i == 1:
             int_mat[Activity.Reaction][0, 1] = 0

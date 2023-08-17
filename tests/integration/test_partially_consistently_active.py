@@ -1,5 +1,4 @@
 import numpy as np
-
 from analyzer.assess_engagement import assess_engagement
 from analyzer.utils.activity import Activity
 
@@ -15,10 +14,10 @@ def test_two_consistently_active_partially():
 
     acc_names = np.array(acc_names)
 
-    ## four weeks
+    # four weeks
     max_interval = 28
 
-    ## preparing empty joined members dict
+    # preparing empty joined members dict
     all_joined = dict(
         zip(np.array(range(max_interval), dtype=str), np.repeat(set(), max_interval))
     )
@@ -83,12 +82,12 @@ def test_two_consistently_active_partially():
         Activity.Reaction: np.zeros((acc_count, acc_count)),
     }
 
-    ## `user_1` intracting with `user_2`
+    # `user_1` intracting with `user_2`
     int_mat[Activity.Reaction][0, 1] = 2
 
-    ## the analytics
+    # the analytics
     for w_i in range(max_interval):
-        ## time window
+        # time window
         WINDOW_D = 7
 
         (_, *activity_dict) = assess_engagement(
@@ -121,8 +120,8 @@ def test_two_consistently_active_partially():
         "11": set(),
         "12": set(),
         "13": set(),
-        ## index 14 == Day 15
-        ## Starting day of week 3
+        # index 14 == Day 15
+        # Starting day of week 3
         "14": {"user0", "user1"},
         "15": set(),
         "16": set(),
@@ -130,8 +129,8 @@ def test_two_consistently_active_partially():
         "18": set(),
         "19": set(),
         "20": set(),
-        ## index 21 == Day 22
-        ## Starting point of week 4
+        # index 21 == Day 22
+        # Starting point of week 4
         "21": {"user0", "user1"},
         "22": set(),
         "23": set(),

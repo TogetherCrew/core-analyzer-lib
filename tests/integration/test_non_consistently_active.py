@@ -1,5 +1,4 @@
 import numpy as np
-
 from analyzer.assess_engagement import assess_engagement
 from analyzer.utils.activity import Activity
 
@@ -17,10 +16,10 @@ def test_two_consistently_active_non():
 
     acc_names = np.array(acc_names)
 
-    ## four weeks
+    # four weeks
     max_interval = 28
 
-    ## preparing empty joined members dict
+    # preparing empty joined members dict
     all_joined = dict(
         zip(np.array(range(max_interval), dtype=str), np.repeat(set(), max_interval))
     )
@@ -85,12 +84,12 @@ def test_two_consistently_active_non():
         Activity.Reaction: np.zeros((acc_count, acc_count)),
     }
 
-    ## `user_1` intracting with `user_2`
+    # `user_1` intracting with `user_2`
     int_mat[Activity.Reaction][0, 1] = 2
 
-    ## the analytics
+    # the analytics
     for w_i in range(max_interval):
-        ## time window
+        # time window
         WINDOW_D = 7
 
         (_, *activity_dict) = assess_engagement(
@@ -103,8 +102,8 @@ def test_two_consistently_active_non():
         )
 
         activity_dict = dict(zip(activities, activity_dict))
-        ## when the next week is comming
-        ## zeroing all activities
+        # when the next week is comming
+        # zeroing all activities
         if w_i == 13:
             int_mat[Activity.Reaction][0, 1] = 0
 

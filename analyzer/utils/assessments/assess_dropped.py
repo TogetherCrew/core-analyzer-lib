@@ -11,7 +11,7 @@ def assess_dropped(
     all_dropped: dict[str, set[str]],
 ) -> dict[str, set[str]]:
     """
-    Assess all still active accounts
+    Assess all dropped accounts
 
     Parameters:
     -------------
@@ -36,9 +36,9 @@ def assess_dropped(
 
     Returns:
     ----------
-    all_still_active : dict[str, set[str]]
+    all_dropped : dict[str, set[str]]
         dictionary with keys w_i and values
-        containing a list of all account names that are still active
+        containing a list of all account names that are dropped
         updated for window w_i
     """
 

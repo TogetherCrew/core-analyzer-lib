@@ -6,8 +6,8 @@ def assess_overlap(
 ) -> tuple[set[str], set[str]]:
     """
     Assesses the overlap between member type dictionaries at selected time points
-    Notes: The comparison set needs to be at the same time point (num_past = 0) 
-    or a previous time point (num_past > 0) relative to reference set. 
+    Notes: The comparison set needs to be at the same time point (num_past = 0)
+    or a previous time point (num_past > 0) relative to reference set.
     If a future time point is required, switch ref_dict and comp_dict
 
     Parameters:
@@ -15,7 +15,7 @@ def assess_overlap(
     ref_dict : dict[str, set[str]]
         reference dictionary to be used in the comparison
     comp_dict : dict[str, set[str]]
-        comparison dictionary to be used in the comparison. 
+        comparison dictionary to be used in the comparison.
     w_i : int
         time period for set from ref_dict
     num_past : int

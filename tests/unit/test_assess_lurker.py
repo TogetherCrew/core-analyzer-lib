@@ -9,13 +9,11 @@ def test_assess_lurker():
         "0": set(["user0", "user1", "user2", "user3", "user4"]),
         "1": set(["user1", "user2", "user3", "user4"]),
     }
-    all_lurker = {
-        "0": set()
-    }
+    all_lurker = {"0": set()}
 
     all_joined_day: dict[str, set[str]] = {
         "0": set(),
-        "1": set(["user2", "user3", "user4", "user5", "user6"])
+        "1": set(["user2", "user3", "user4", "user5", "user6"]),
     }
 
     # For testing purposes we're setting 1 for each parameters of vital
@@ -26,4 +24,4 @@ def test_assess_lurker():
         w_i=1,
     )
 
-    assert all_lurker["1"] == set([ "user5", "user6"])
+    assert all_lurker["1"] == set(["user5", "user6"])

@@ -104,7 +104,6 @@ def test_disengaged_members():
         if w_i == 28:
             int_mat[Activity.Reaction][0, 1] = 0
 
-    # BUG: we're getting empty for this -> output is {}
     print("all_active", activity_dict["all_active"])
     print("all_disengaged", activity_dict["all_disengaged"])
 
@@ -116,6 +115,13 @@ def test_disengaged_members():
         "4": set(),
         "5": set(),
         "6": set(),
+        "7": set(),
+        "8": set(),
+        "9": set(),
+        "10": set(),
+        "11": set(),
+        "12": set(),
+        "13": set(),
         "14": set(),
         "15": set(),
         "16": set(),

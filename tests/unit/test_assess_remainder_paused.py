@@ -7,27 +7,13 @@ def test_assess_paused():
         "1": set(["user0", "user1", "user2", "user3", "user5"]),
     }
 
-    all_new_active = {
-        "0": set(["user0", "user1", "user2", "user3", "user4"])
-    }
-    all_unpaused = {
-        "0": set([])
-    }
-    all_returned = {
-        "0": set([])
-    }
-    all_paused = {
-        "0": set([])
-    }
-    all_disengaged = {
-        "0": set([])
-    }
-    all_disengaged_in_past = {
-        "0": set([])
-    }
-    all_new_disengaged = {
-        "0": set([])
-    }
+    all_new_active = {"0": set(["user0", "user1", "user2", "user3", "user4"])}
+    all_unpaused = {"0": set([])}
+    all_returned = {"0": set([])}
+    all_paused = {"0": set([])}
+    all_disengaged = {"0": set([])}
+    all_disengaged_in_past = {"0": set([])}
+    all_new_disengaged = {"0": set([])}
 
     (
         all_new_active,
@@ -36,7 +22,7 @@ def test_assess_paused():
         all_paused,
         all_new_disengaged,
         all_disengaged,
-        all_disengaged_in_past
+        all_disengaged_in_past,
     ) = assess_remainder(
         all_active=all_active,
         w_i=1,
@@ -48,7 +34,7 @@ def test_assess_paused():
         all_paused=all_paused,
         all_disengaged=all_disengaged,
         all_disengaged_in_past=all_disengaged_in_past,
-        all_new_disengaged = all_new_disengaged
+        all_new_disengaged=all_new_disengaged,
     )
 
     assert all_paused["1"] == set(["user4"])
@@ -56,5 +42,3 @@ def test_assess_paused():
     assert all_returned["1"] == set([])
     assert all_new_disengaged["1"] == set([])
     assert all_disengaged_in_past["1"] == set([])
-
-

@@ -51,7 +51,7 @@ def assess_engagement(
 
     Parameters:
     ------------
-    int_mat : np.ndarray 
+    int_mat : np.ndarray
         interaction matrix of users, a 2D matrix
     w_i : int
         index of sliding time window

@@ -169,6 +169,13 @@ def assess_remainder(
             # remove disengaged accounts from paused accounts
             temp_currently_paused = temp_currently_paused - all_disengaged[str(w_i)]
 
+        else:
+            all_disengaged[str(w_i)] = set([])
+            all_new_disengaged[str(w_i)] = set([])
+            all_unpaused[str(w_i)] = set([])
+            all_returned[str(w_i)] = set([])
+            all_disengaged_in_past[str(w_i)] = set([])
+
         # # # PAUSED (2 of 2) # # #
 
         # store currently paused accounts

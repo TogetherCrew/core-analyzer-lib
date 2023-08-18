@@ -49,37 +49,59 @@ def assess_engagement(
     """
     Assess engagment levels for all active members in a time period
 
-    Input:
-    graph - (graph, 1D np.array, 1D np.array) : (the graph object,
-        weighted degree, fraction of weighted in degree)
-    w_i - int : index of sliding time window
-    WINDOW_D - int : duration of sliding window (days)
-    all_* - {str : [str]} : dictionary with keys w_i and values
+    Parameters:
+    ------------
+    int_mat : np.ndarray 
+        interaction matrix of users, a 2D matrix
+    w_i : int
+        index of sliding time window
+    WINDOW_D : int
+        duration of sliding window (days)
+    all_* : dict[str, set[str]]
+        dictionary with keys w_i and values
         containing a list of all account names belonging to engagement
         category *
 
-    act_param - [int] : parameters for activity types:
-    INT_THR - int : minimum number of interactions to be active
-    UW_DEG_THR - int : minimum number of connections to be active
-    EDGE_STR_THR - int : minimum number of interactions for connected
-    UW_THR_DEG_THR - int : minimum number of accounts for connected
-    CON_T_THR - int : time period to assess consistently active
-    CON_O_THR - int : times to be active within CON_T_THR to be
+    act_param : list[int]
+        parameters for activity types:
+    INT_THR : int
+        minimum number of interactions to be active
+    UW_DEG_THR : int
+        minimum number of connections to be active
+    EDGE_STR_THR : int
+        minimum number of interactions for connected
+    UW_THR_DEG_THR : int
+        minimum number of accounts for connected
+    CON_T_THR : int
+        time period to assess consistently active
+    CON_O_THR : int
+        times to be active within CON_T_THR to be
         consistently active
-    VITAL_T_THR - int : time period to assess for vital
-    VITAL_O_THR - int : times to be connected within VITAL_T_THR to be vital
-    PAUSED_T_THR - int : time period to remain paused
-    STILL_T_THR - int : time period to assess for still active
-    STILL_O_THR - int : times to be active within STILL_T_THR to be still active
-    DROP_H_THR - int : time periods in the past to have been newly active
-    DROP_I_THR - int : time periods to have been inactive
+    VITAL_T_THR : int
+        time period to assess for vital
+    VITAL_O_THR : int
+        times to be connected within VITAL_T_THR to be vital
+    PAUSED_T_THR : int
+        time period to remain paused
+    STILL_T_THR : int
+        time period to assess for still active
+    STILL_O_THR : int
+        times to be active within STILL_T_THR to be still active
+    DROP_H_THR : int
+        time periods in the past to have been newly active
+    DROP_I_THR : int
+        time periods to have been inactive
 
-    Output:
-    graph - {networkx object} : networkx object for int_mat
-    all_* - {str : [str]} : dictionary with keys w_i and values
+    Returns:
+    ---------
+    graph : networkx.DiGraph
+        networkx object for int_mat
+    all_* : dict[str, [str]]
+        dictionary with keys w_i and values
         containing a list of all account names belonging to engagement
         category * updated for window w_i
-    all_disengaged_* - set : set with all unique account names belong to one of the
+    all_disengaged_* : dict[str, set[str]]
+        set with all unique account names belong to one of the
         disengaged member types for window w_i
     """
 

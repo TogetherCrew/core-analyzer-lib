@@ -50,6 +50,7 @@ def test_assess_disengaged_no_past_disengaged():
     assert all_new_disengaged["3"] == set(["user5"])
     assert all_disengaged["3"] == set(["user5"])
 
+
 def test_assess_disengaged_with_past_disengaged():
     all_active = {
         "0": set(["user0", "user1", "user2", "user3", "user4", "user5"]),

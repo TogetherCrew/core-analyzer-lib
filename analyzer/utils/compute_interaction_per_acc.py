@@ -60,16 +60,6 @@ def thr_int(
         the network graph of active members
     """
 
-    # # # SELECT DATA FROM INT_MAT # # #
-
-    # select number of active interactions per account
-    # int_analysis = (
-    #     np.sum(int_mat[Activity.Reply], axis=0)
-    #     + np.sum(int_mat[Activity.Reply], axis=1)
-    #     + np.sum(int_mat[Activity.Reaction], axis=0)
-    #     + np.sum(int_mat[Activity.Reaction], axis=1)
-    #     + np.sum(int_mat[Activity.Mention], axis=1)
-    # )
     ignore_axis_0_activities: list[str]
     ignore_axis_1_activities: list[str]
 

@@ -57,7 +57,9 @@ def test_two_consistently_active():
     VITAL_O_THR = 3  # times to be connected within VITAL_T_THR to be vital
     STILL_T_THR = 2  # time period to assess for still active
     STILL_O_THR = 2  # times to be active within STILL_T_THR to be still active
+    # time periods into the past (history) to be newly active for computing dropped
     DROP_H_THR = 2
+    # consecutive time periods into the past to have not been active for computing
     DROP_I_THR = 1
 
     act_param = [

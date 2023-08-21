@@ -1,5 +1,4 @@
 import numpy as np
-
 from analyzer.utils.generate_graph import make_graph
 
 

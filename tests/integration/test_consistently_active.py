@@ -1,5 +1,4 @@
 import numpy as np
-
 from analyzer.assess_engagement import EngagementAssessment
 from analyzer.utils.activity import DiscordActivity
 

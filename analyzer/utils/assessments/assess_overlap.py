@@ -24,10 +24,10 @@ def assess_overlap(
     Returns:
     ---------
     rem_acc : set[str]
-        remaining accounts from ref_dict[w_i] 
+        remaining accounts from ref_dict[w_i]
         that do not overlap with the selected comp_dict set
     overlap_acc : set[str]
-        accounts that overlap between ref_dict[w_i] 
+        accounts that overlap between ref_dict[w_i]
         and the selected comp_dict set
     """
     w_i_str = str(w_i)

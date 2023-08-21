@@ -1,6 +1,7 @@
 import numpy as np
-from analyzer.assess_engagement import assess_engagement
-from analyzer.utils.activity import Activity
+
+from analyzer.assess_engagement import EngagementAssessment
+from analyzer.utils.activity import DiscordActivity
 
 
 def test_disengaged_members():
@@ -41,7 +42,7 @@ def test_disengaged_members():
         "all_about_to_disengage": {},
         "all_disengaged_in_past": {},
     }
-    activities = activity_dict.keys()
+    memberactivities = activity_dict.keys()
 
     INT_THR = 1  # minimum number of interactions to be active
     UW_DEG_THR = 1  # minimum number of accounts interacted with to be active
@@ -76,20 +77,30 @@ def test_disengaged_members():
     ]
 
     int_mat = {
-        Activity.Reply: np.zeros((acc_count, acc_count)),
-        Activity.Mention: np.zeros((acc_count, acc_count)),
-        Activity.Reaction: np.zeros((acc_count, acc_count)),
+        DiscordActivity.Reply: np.zeros((acc_count, acc_count)),
+        DiscordActivity.Mention: np.zeros((acc_count, acc_count)),
+        DiscordActivity.Reaction: np.zeros((acc_count, acc_count)),
     }
 
     # `user_1` intracting with `user_2`
-    int_mat[Activity.Reaction][0, 1] = 2
+    int_mat[DiscordActivity.Reaction][0, 1] = 2
+
+    activities = [
+        DiscordActivity.Reaction,
+        DiscordActivity.Mention,
+        DiscordActivity.Reply,
+    ]
+
+    engagement = EngagementAssessment(
+        activities=activities, activities_ignore_0_axis=[], activities_ignore_1_axis=[]
+    )
 
     # the analytics
     for w_i in range(max_interval):
         # time window
         WINDOW_D = 7
 
-        (_, *activity_dict) = assess_engagement(
+        (_, *activity_dict) = engagement.compute(
             int_mat=int_mat,
             w_i=w_i,
             acc_names=acc_names,
@@ -98,13 +109,13 @@ def test_disengaged_members():
             **activity_dict,
         )
 
-        activity_dict = dict(zip(activities, activity_dict))
+        activity_dict = dict(zip(memberactivities, activity_dict))
 
         # zeroing all the activities on day 29
         # meaning we could have disengaged members on day (29 + 7) = 36
         # 14 is two periods
         if w_i == 28:
-            int_mat[Activity.Reaction][0, 1] = 0
+            int_mat[DiscordActivity.Reaction][0, 1] = 0
 
     print("all_active", activity_dict["all_active"])
     print("all_disengaged", activity_dict["all_disengaged"])

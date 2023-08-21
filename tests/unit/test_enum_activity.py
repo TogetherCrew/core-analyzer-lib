@@ -1,7 +1,12 @@
-from analyzer.utils.activity import Activity
+from analyzer.utils.activity import BaseActivity, DiscordActivity
 
 
-def test_enum_activity():
-    assert Activity.Mention == "mention"
-    assert Activity.Reply == "reply"
-    assert Activity.Reaction == "reaction"
+def test_enum_discord_activity():
+    assert DiscordActivity.Mention == "mention"
+    assert DiscordActivity.Reply == "reply"
+    assert DiscordActivity.Reaction == "reaction"
+
+
+def test_enum_base_activity():
+    assert BaseActivity.Mention == "mention"
+    assert BaseActivity.Reply == "reply"

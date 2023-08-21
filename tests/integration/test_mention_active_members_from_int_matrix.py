@@ -1,6 +1,7 @@
 import numpy as np
-from analyzer.assess_engagement import assess_engagement
-from analyzer.utils.activity import Activity
+
+from analyzer.assess_engagement import EngagementAssessment
+from analyzer.utils.activity import DiscordActivity
 
 
 def test_mention_active_members_from_int_matrix():
@@ -79,23 +80,34 @@ def test_mention_active_members_from_int_matrix():
         "all_about_to_disengage": {},
         "all_disengaged_in_past": {},
     }
-    activities = activity_dict.keys()
+    memberactivities = activity_dict.keys()
 
     int_mat = {
-        Activity.Reply: np.zeros((acc_count, acc_count)),
-        Activity.Mention: np.zeros((acc_count, acc_count)),
-        Activity.Reaction: np.zeros((acc_count, acc_count)),
+        DiscordActivity.Reply: np.zeros((acc_count, acc_count)),
+        DiscordActivity.Mention: np.zeros((acc_count, acc_count)),
+        DiscordActivity.Reaction: np.zeros((acc_count, acc_count)),
     }
 
     # `user_0` mentioning `user_1`
-    int_mat[Activity.Mention][0, 1] = 2
+    int_mat[DiscordActivity.Mention][0, 1] = 2
+
+    activities = [
+        DiscordActivity.Reaction,
+        DiscordActivity.Mention,
+        DiscordActivity.Reply,
+    ]
+    engagement = EngagementAssessment(
+        activities=activities,
+        activities_ignore_0_axis=[DiscordActivity.Mention],
+        activities_ignore_1_axis=[],
+    )
 
     # the analytics
     for w_i in range(max_interval):
         # time window
         WINDOW_D = 7
 
-        (_, *activity_dict) = assess_engagement(
+        (_, *activity_dict) = engagement.compute(
             int_mat=int_mat,
             w_i=w_i,
             acc_names=acc_names,
@@ -104,11 +116,11 @@ def test_mention_active_members_from_int_matrix():
             **activity_dict,
         )
 
-        activity_dict = dict(zip(activities, activity_dict))
+        activity_dict = dict(zip(memberactivities, activity_dict))
         # zeroing it on the day 7
         # we should have it all_disengaged_were_newly_active in day 7 + 7
         if w_i == 6:
-            int_mat[Activity.Mention][0, 1] = 0
+            int_mat[DiscordActivity.Mention][0, 1] = 0
 
     print("all_new_active:", activity_dict["all_new_active"])
 

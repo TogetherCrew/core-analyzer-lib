@@ -1,8 +1,17 @@
-class Activity:
+class BaseActivity:
     """
-    enum class
+    base enum class for activities in a server
     """
 
-    Reply = "reply"
-    Mention = "mention"
-    Reaction = "reaction"
+    Reply: str = "reply"
+    Mention: str = "mention"
+
+
+class DiscordActivity:
+    """
+    Discord activities
+    """
+
+    Reply: str = BaseActivity.Reply
+    Mention: str = BaseActivity.Mention
+    Reaction: str = "reaction"

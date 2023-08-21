@@ -1,6 +1,7 @@
 import numpy as np
-from analyzer.assess_engagement import assess_engagement
-from analyzer.utils.activity import Activity
+
+from analyzer.assess_engagement import EngagementAssessment
+from analyzer.utils.activity import DiscordActivity
 
 
 def test_disengaged_were_vital():
@@ -74,28 +75,38 @@ def test_disengaged_were_vital():
         "all_about_to_disengage": {},
         "all_disengaged_in_past": {},
     }
-    activities = activity_dict.keys()
+    memberactivities = activity_dict.keys()
 
     int_mat = {
-        Activity.Reply: np.zeros((acc_count, acc_count)),
-        Activity.Mention: np.zeros((acc_count, acc_count)),
-        Activity.Reaction: np.zeros((acc_count, acc_count)),
+        DiscordActivity.Reply: np.zeros((acc_count, acc_count)),
+        DiscordActivity.Mention: np.zeros((acc_count, acc_count)),
+        DiscordActivity.Reaction: np.zeros((acc_count, acc_count)),
     }
     # `user_0` intracting with `user_1`, `user_2`, `user_3`, `user_4`, `user_5`
     # at least 5 times was needed
-    int_mat[Activity.Reaction][0, 1] = 6
-    int_mat[Activity.Reaction][0, 2] = 6
-    int_mat[Activity.Reaction][0, 3] = 6
-    int_mat[Activity.Reaction][0, 4] = 6
-    int_mat[Activity.Reaction][0, 5] = 6
-    int_mat[Activity.Reaction][0, 6] = 6
+    int_mat[DiscordActivity.Reaction][0, 1] = 6
+    int_mat[DiscordActivity.Reaction][0, 2] = 6
+    int_mat[DiscordActivity.Reaction][0, 3] = 6
+    int_mat[DiscordActivity.Reaction][0, 4] = 6
+    int_mat[DiscordActivity.Reaction][0, 5] = 6
+    int_mat[DiscordActivity.Reaction][0, 6] = 6
+
+    activities = [
+        DiscordActivity.Reaction,
+        DiscordActivity.Mention,
+        DiscordActivity.Reply,
+    ]
+
+    engagement = EngagementAssessment(
+        activities=activities, activities_ignore_0_axis=[], activities_ignore_1_axis=[]
+    )
 
     # the analytics
     for w_i in range(max_interval):
         # time window
         WINDOW_D = 7
 
-        (_, *activity_dict) = assess_engagement(
+        (_, *activity_dict) = engagement.compute(
             int_mat=int_mat,
             w_i=w_i,
             acc_names=acc_names,
@@ -104,18 +115,18 @@ def test_disengaged_were_vital():
             **activity_dict,
         )
 
-        activity_dict = dict(zip(activities, activity_dict))
+        activity_dict = dict(zip(memberactivities, activity_dict))
 
         # zeroing all the activities for w_i == 22
         # we would have the all_disengaged_were_vital on day (22 + 7) = 29
         # we assumed -1 period as 7 days and the zeroth period would be day w_i = 29
         if w_i == 21:
-            int_mat[Activity.Reaction][0, 1] = 0
-            int_mat[Activity.Reaction][0, 2] = 0
-            int_mat[Activity.Reaction][0, 3] = 0
-            int_mat[Activity.Reaction][0, 4] = 0
-            int_mat[Activity.Reaction][0, 5] = 0
-            int_mat[Activity.Reaction][0, 6] = 0
+            int_mat[DiscordActivity.Reaction][0, 1] = 0
+            int_mat[DiscordActivity.Reaction][0, 2] = 0
+            int_mat[DiscordActivity.Reaction][0, 3] = 0
+            int_mat[DiscordActivity.Reaction][0, 4] = 0
+            int_mat[DiscordActivity.Reaction][0, 5] = 0
+            int_mat[DiscordActivity.Reaction][0, 6] = 0
 
     print("all_vital:", activity_dict["all_vital"])
     print("all_new_disengaged:", activity_dict["all_new_disengaged"])

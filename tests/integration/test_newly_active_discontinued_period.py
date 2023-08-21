@@ -1,6 +1,7 @@
 import numpy as np
-from analyzer.assess_engagement import assess_engagement
-from analyzer.utils.activity import Activity
+
+from analyzer.assess_engagement import EngagementAssessment
+from analyzer.utils.activity import DiscordActivity
 
 
 def test_newly_active_discontinued_period():
@@ -74,23 +75,33 @@ def test_newly_active_discontinued_period():
         "all_about_to_disengage": {},
         "all_disengaged_in_past": {},
     }
-    activities = activity_dict.keys()
+    memberactivities = activity_dict.keys()
 
     int_mat = {
-        Activity.Reply: np.zeros((acc_count, acc_count)),
-        Activity.Mention: np.zeros((acc_count, acc_count)),
-        Activity.Reaction: np.zeros((acc_count, acc_count)),
+        DiscordActivity.Reply: np.zeros((acc_count, acc_count)),
+        DiscordActivity.Mention: np.zeros((acc_count, acc_count)),
+        DiscordActivity.Reaction: np.zeros((acc_count, acc_count)),
     }
 
     # `user_1` intracting with `user_2`
-    int_mat[Activity.Reaction][0, 1] = 2
+    int_mat[DiscordActivity.Reaction][0, 1] = 2
+
+    activities = [
+        DiscordActivity.Reaction,
+        DiscordActivity.Mention,
+        DiscordActivity.Reply,
+    ]
+
+    engagement = EngagementAssessment(
+        activities=activities, activities_ignore_0_axis=[], activities_ignore_1_axis=[]
+    )
 
     # the analytics
     for w_i in range(max_interval):
         # time window
         WINDOW_D = 7
 
-        (_, *activity_dict) = assess_engagement(
+        (_, *activity_dict) = engagement.compute(
             int_mat=int_mat,
             w_i=w_i,
             acc_names=acc_names,
@@ -102,9 +113,9 @@ def test_newly_active_discontinued_period():
         # for new all_new_active users
         if w_i == 13:
             # user 4 with 5 interacting
-            int_mat[Activity.Reaction][3, 4] = 2
+            int_mat[DiscordActivity.Reaction][3, 4] = 2
 
-        activity_dict = dict(zip(activities, activity_dict))
+        activity_dict = dict(zip(memberactivities, activity_dict))
 
     # print("all_still_active:", activity_dict["all_still_active"])
     print("all_new_active:", activity_dict["all_new_active"])

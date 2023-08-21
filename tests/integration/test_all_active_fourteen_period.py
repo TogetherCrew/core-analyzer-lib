@@ -1,6 +1,7 @@
 import numpy as np
-from analyzer.assess_engagement import assess_engagement
-from analyzer.utils.activity import Activity
+
+from analyzer.assess_engagement import EngagementAssessment
+from analyzer.utils.activity import DiscordActivity
 
 
 def test_all_active_fourteen_period():
@@ -87,30 +88,40 @@ def test_all_active_fourteen_period():
     acc_count = len(acc_names)
 
     int_mat = {
-        Activity.Reply: np.zeros((acc_count, acc_count)),
-        Activity.Mention: np.zeros((acc_count, acc_count)),
-        Activity.Reaction: np.zeros((acc_count, acc_count)),
+        DiscordActivity.Reply: np.zeros((acc_count, acc_count)),
+        DiscordActivity.Mention: np.zeros((acc_count, acc_count)),
+        DiscordActivity.Reaction: np.zeros((acc_count, acc_count)),
     }
 
     # from day zero user0 and user1 are active
-    int_mat[Activity.Reaction][0, 1] = 1
-    int_mat[Activity.Reaction][1, 0] = 2
+    int_mat[DiscordActivity.Reaction][0, 1] = 1
+    int_mat[DiscordActivity.Reaction][1, 0] = 2
+
+    activities = [
+        DiscordActivity.Reaction,
+        DiscordActivity.Mention,
+        DiscordActivity.Reply,
+    ]
+
+    engagement = EngagementAssessment(
+        activities=activities, activities_ignore_0_axis=[], activities_ignore_1_axis=[]
+    )
 
     # two weeks represantative of 14 days
     for day_i in range(14):
         if day_i == 1:
-            int_mat[Activity.Reaction][0, 1] = 0
-            int_mat[Activity.Reaction][1, 0] = 0
+            int_mat[DiscordActivity.Reaction][0, 1] = 0
+            int_mat[DiscordActivity.Reaction][1, 0] = 0
 
         if day_i == 3:
-            int_mat[Activity.Reaction][2, 3] = 2
-            int_mat[Activity.Reaction][3, 2] = 4
+            int_mat[DiscordActivity.Reaction][2, 3] = 2
+            int_mat[DiscordActivity.Reaction][3, 2] = 4
 
         if day_i == 4:
-            int_mat[Activity.Reaction][2, 3] = 0
-            int_mat[Activity.Reaction][3, 2] = 0
+            int_mat[DiscordActivity.Reaction][2, 3] = 0
+            int_mat[DiscordActivity.Reaction][3, 2] = 0
 
-        (_, *computed_activities) = assess_engagement(
+        (_, *computed_activities) = engagement.compute(
             int_mat=int_mat,
             w_i=day_i,
             acc_names=acc_names,

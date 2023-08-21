@@ -1,6 +1,7 @@
 import numpy as np
-from analyzer.assess_engagement import assess_engagement
-from analyzer.utils.activity import Activity
+
+from analyzer.assess_engagement import EngagementAssessment
+from analyzer.utils.activity import DiscordActivity
 
 
 def test_no_active():
@@ -12,9 +13,9 @@ def test_no_active():
     acc_names = np.array(acc_names)
 
     int_mat = {
-        Activity.Reply: np.zeros((acc_count, acc_count)),
-        Activity.Mention: np.zeros((acc_count, acc_count)),
-        Activity.Reaction: np.zeros((acc_count, acc_count)),
+        DiscordActivity.Reply: np.zeros((acc_count, acc_count)),
+        DiscordActivity.Mention: np.zeros((acc_count, acc_count)),
+        DiscordActivity.Reaction: np.zeros((acc_count, acc_count)),
     }
 
     activity_dict = {
@@ -79,7 +80,17 @@ def test_no_active():
         DROP_I_THR,
     ]
 
-    (_, *computed_activities) = assess_engagement(
+    activities = [
+        DiscordActivity.Reaction,
+        DiscordActivity.Mention,
+        DiscordActivity.Reply,
+    ]
+
+    engagement = EngagementAssessment(
+        activities=activities, activities_ignore_0_axis=[], activities_ignore_1_axis=[]
+    )
+
+    (_, *computed_activities) = engagement.compute(
         int_mat=int_mat,
         w_i=w_i,
         acc_names=acc_names,
@@ -123,11 +134,11 @@ def test_single_active():
     acc_names = np.array(acc_names)
 
     int_mat = {
-        Activity.Reply: np.zeros((acc_count, acc_count)),
-        Activity.Mention: np.zeros((acc_count, acc_count)),
-        Activity.Reaction: np.zeros((acc_count, acc_count)),
+        DiscordActivity.Reply: np.zeros((acc_count, acc_count)),
+        DiscordActivity.Mention: np.zeros((acc_count, acc_count)),
+        DiscordActivity.Reaction: np.zeros((acc_count, acc_count)),
     }
-    int_mat[Activity.Reply][0, 1] = 2
+    int_mat[DiscordActivity.Reply][0, 1] = 2
 
     activity_dict = {
         "all_joined": {"0": set()},
@@ -188,7 +199,17 @@ def test_single_active():
         DROP_I_THR,
     ]
 
-    (_, *computed_activities) = assess_engagement(
+    activities = [
+        DiscordActivity.Reaction,
+        DiscordActivity.Mention,
+        DiscordActivity.Reply,
+    ]
+
+    engagement = EngagementAssessment(
+        activities=activities, activities_ignore_0_axis=[], activities_ignore_1_axis=[]
+    )
+
+    (_, *computed_activities) = engagement.compute(
         int_mat=int_mat,
         w_i=w_i,
         acc_names=acc_names,

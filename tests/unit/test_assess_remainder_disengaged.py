@@ -55,7 +55,7 @@ def test_assess_disengaged_with_past_disengaged():
     all_active = {
         "0": set(["user0", "user1", "user2", "user3", "user4", "user5"]),
         "1": set(["user0", "user1", "user2", "user3", "user4"]),
-        "2": set(["user0", "user1", "user2", "user3", "user4", "user6", "user7"]),
+        "2": set(["user0", "user1", "user2", "user3", "user4"]),
         "3": set(["user0", "user1", "user2", "user3", "user4"]),
     }
 

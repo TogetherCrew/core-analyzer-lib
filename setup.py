@@ -5,7 +5,7 @@ with open("requirements.txt") as f:
 
 
 setup(
-    name="tc-core-analyzer",
+    name="tc-core-analyzer-lib",
     version="1.0.0",
     author="Mohammad Amin Dadgar, TogetherCrew",
     maintainer="Mohammad Amin Dadgar",

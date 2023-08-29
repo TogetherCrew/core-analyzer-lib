@@ -1,4 +1,6 @@
-from tc_core_analyzer_lib.utils.assessments.assess_still_active import assess_still_active
+from tc_core_analyzer_lib.utils.assessments.assess_still_active import (
+    assess_still_active
+)
 
 
 def test_still_active():

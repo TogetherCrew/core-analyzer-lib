@@ -1,5 +1,5 @@
 from tc_core_analyzer_lib.utils.assessments.assess_still_active import (
-    assess_still_active
+    assess_still_active,
 )
 
 

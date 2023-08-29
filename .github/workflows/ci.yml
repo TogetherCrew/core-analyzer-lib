@@ -1,6 +1,9 @@
-name: Staging CI/CD Pipeline
+name: Package Publishing
 
-on: pull_request
+on: 
+  push:
+    branches:
+      - main
 
 jobs:
   ci:

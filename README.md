@@ -8,3 +8,9 @@ This repository is made for togethercrew core-analyzer scripts that could be use
 ```bash
 pip install tc-core-analyzer-lib
 ```
+
+Usage:
+
+```Python
+from tc_core_analyzer_lib.assess_engagement import EngagementAssessment
+```

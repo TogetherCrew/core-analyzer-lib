@@ -1,7 +1,7 @@
 # tc-core-analyzer
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/e1239b895f0ee2569b61/maintainability)](https://codeclimate.com/github/TogetherCrew/core-analyzer-lib/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/e1239b895f0ee2569b61/test_coverage)](https://codeclimate.com/github/TogetherCrew/core-analyzer-lib/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/116d55363d2feda928d5/maintainability)](https://codeclimate.com/github/TogetherCrew/core-analyzer-lib/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/116d55363d2feda928d5/test_coverage)](https://codeclimate.com/github/TogetherCrew/core-analyzer-lib/test_coverage)
 
 This repository is made for togethercrew core-analyzer scripts that could be used across different platforms. To install this library
 

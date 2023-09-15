@@ -151,9 +151,6 @@ def get_analysis_vector(
     """
     user_count = int_mat[activites[0]].shape[0]
 
-    print("ignore_axis_0_activities: ", ignore_axis_0_activities)
-    print("ignore_axis_1_activities: ", ignore_axis_1_activities)
-
     # creating the zero analysis vector for all users
     int_analysis = np.zeros(user_count)
 

@@ -78,6 +78,7 @@ def test_mention_active_members_from_int_matrix():
         "all_lurker": {},
         "all_about_to_disengage": {},
         "all_disengaged_in_past": {},
+        "all_inconsistent": {},
     }
     memberactivities = activity_dict.keys()
 

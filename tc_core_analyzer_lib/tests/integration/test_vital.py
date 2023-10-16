@@ -74,6 +74,7 @@ def test_one_vital():
         "all_lurker": {},
         "all_about_to_disengage": {},
         "all_disengaged_in_past": {},
+        "all_inconsistent": {},
     }
     memberactivites = activity_dict.keys()
 

@@ -38,6 +38,7 @@ def test_no_active():
         "all_lurker": {},
         "all_about_to_disengage": {},
         "all_disengaged_in_past": {},
+        "all_inconsistent": {},
     }
 
     WINDOW_D = 7
@@ -160,6 +161,7 @@ def test_single_active():
         "all_lurker": {},
         "all_about_to_disengage": {},
         "all_disengaged_in_past": {},
+        "all_inconsistent": {},
     }
     # time window
     WINDOW_D = 7

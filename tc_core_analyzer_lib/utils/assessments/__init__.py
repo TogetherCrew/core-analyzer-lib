@@ -8,3 +8,4 @@ from .assess_overlap import assess_overlap
 from .assess_remainder import assess_remainder
 from .assess_still_active import assess_still_active
 from .assess_vital import assess_vital
+from .assess_inconsistent import assess_inconsistent

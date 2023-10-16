@@ -73,6 +73,10 @@ def test_all_active_fourteen_period():
         "all_about_to_disengage": {},
         "all_disengaged_in_past": {},
         "all_inconsistent": {},
+        "all_new_consistent": {},
+        "all_new_vital": {},
+        "all_became_inconsistent": {},
+        "all_became_unvital": {},
     }
 
     WINDOW_D = 7

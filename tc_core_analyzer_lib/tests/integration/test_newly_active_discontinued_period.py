@@ -74,6 +74,11 @@ def test_newly_active_discontinued_period():
         "all_about_to_disengage": {},
         "all_disengaged_in_past": {},
         "all_inconsistent": {},
+        "all_inconsistent": {},
+        "all_new_consistent": {},
+        "all_new_vital": {},
+        "all_became_inconsistent": {},
+        "all_became_unvital": {},
     }
     memberactivities = activity_dict.keys()
 

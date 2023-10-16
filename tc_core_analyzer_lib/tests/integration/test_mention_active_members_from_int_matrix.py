@@ -79,6 +79,10 @@ def test_mention_active_members_from_int_matrix():
         "all_about_to_disengage": {},
         "all_disengaged_in_past": {},
         "all_inconsistent": {},
+        "all_new_consistent": {},
+        "all_new_vital": {},
+        "all_became_inconsistent": {},
+        "all_became_unvital": {},
     }
     memberactivities = activity_dict.keys()
 

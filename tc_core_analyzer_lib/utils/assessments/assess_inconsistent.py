@@ -4,7 +4,7 @@ def assess_inconsistent(
     all_new_active: dict[str, set[str]],
     all_consistent: dict[str, set[str]],
     w_i: int,
-) -> dict[str, set[str]]:
+) -> set[str]:
     """
     assess inconsistently active members base on the given input sets
 

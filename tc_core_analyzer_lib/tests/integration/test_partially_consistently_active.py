@@ -46,7 +46,7 @@ def test_two_consistently_active_partially():
         "all_inconsistent": {},
         "all_new_consistent": {},
         "all_new_vital": {},
-        "all_became_inconsistent": {},
+        "all_became_not_consistent": {},
         "all_became_unvital": {},
     }
     memberactivities = activity_dict.keys()

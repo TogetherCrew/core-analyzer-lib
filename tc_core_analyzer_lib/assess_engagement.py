@@ -78,7 +78,7 @@ class EngagementAssessment:
         all_inconsistent,
         all_new_consistent,
         all_new_vital,
-        all_became_inconsistent,
+        all_became_not_consistent,
         all_became_unvital,
     ):
         """
@@ -289,7 +289,7 @@ class EngagementAssessment:
             all_new_vital[str(w_i)] = (
                 all_vital[str(w_i)] - all_vital[str(w_i - WINDOW_D)]
             )
-            all_became_inconsistent[str(w_i)] = (
+            all_became_not_consistent[str(w_i)] = (
                 all_consistent[str(w_i - WINDOW_D)] - all_consistent[str(w_i)]
             )
             all_became_unvital[str(w_i)] = (
@@ -298,7 +298,7 @@ class EngagementAssessment:
         else:
             all_new_consistent[str(w_i)] = set()
             all_new_vital[str(w_i)] = set()
-            all_became_inconsistent[str(w_i)] = set()
+            all_became_not_consistent[str(w_i)] = set()
             all_became_unvital[str(w_i)] = set()
 
         return (
@@ -326,6 +326,6 @@ class EngagementAssessment:
             all_inconsistent,
             all_new_consistent,
             all_new_vital,
-            all_became_inconsistent,
+            all_became_not_consistent,
             all_became_unvital,
         )

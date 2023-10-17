@@ -41,7 +41,7 @@ def test_no_active():
         "all_inconsistent": {},
         "all_new_consistent": {},
         "all_new_vital": {},
-        "all_became_inconsistent": {},
+        "all_became_not_consistent": {},
         "all_became_unvital": {},
     }
 
@@ -168,7 +168,7 @@ def test_single_active():
         "all_inconsistent": {},
         "all_new_consistent": {},
         "all_new_vital": {},
-        "all_became_inconsistent": {},
+        "all_became_not_consistent": {},
         "all_became_unvital": {},
     }
     # time window

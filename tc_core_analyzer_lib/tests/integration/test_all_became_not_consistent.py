@@ -1,55 +1,12 @@
+# test all_active members using the interaction matrix
 import numpy as np
 from tc_core_analyzer_lib.assess_engagement import EngagementAssessment
 from tc_core_analyzer_lib.utils.activity import DiscordActivity
 
 
-def test_inconsistently_active():
-    """
-    test conssitently_active members category
-    """
+def test_became_not_consistent():
     acc_names = []
-    acc_count = 5
-    for i in range(5):
-        acc_names.append(f"user{i}")
-
-    acc_names = np.array(acc_names)
-
-    # four weeks
-    max_interval = 28
-
-    # preparing empty joined members dict
-    all_joined = dict(
-        zip(np.array(range(max_interval), dtype=str), np.repeat(set(), max_interval))
-    )
-
-    activity_dict = {
-        "all_joined": {},
-        "all_joined_day": all_joined,
-        "all_consistent": {},
-        "all_vital": {},
-        "all_active": {},
-        "all_connected": {},
-        "all_paused": {},
-        "all_new_disengaged": {},
-        "all_disengaged": {},
-        "all_unpaused": {},
-        "all_returned": {},
-        "all_new_active": {},
-        "all_still_active": {},
-        "all_dropped": {},
-        "all_disengaged_were_newly_active": {},
-        "all_disengaged_were_consistently_active": {},
-        "all_disengaged_were_vital": {},
-        "all_lurker": {},
-        "all_about_to_disengage": {},
-        "all_disengaged_in_past": {},
-        "all_inconsistent": {},
-        "all_new_consistent": {},
-        "all_new_vital": {},
-        "all_became_not_consistent": {},
-        "all_became_unvital": {},
-    }
-    memberactivities = activity_dict.keys()
+    acc_count = 10
 
     INT_THR = 1  # minimum number of interactions to be active
     UW_DEG_THR = 1  # minimum number of accounts interacted with to be active
@@ -83,14 +40,54 @@ def test_inconsistently_active():
         DROP_I_THR,
     ]
 
+    for i in range(acc_count):
+        acc_names.append(f"user{i}")
+
+    acc_names = np.array(acc_names)
+
+    # four weeks
+    max_interval = 35
+
+    # preparing empty joined members dict
+    all_joined = dict(
+        zip(np.array(range(max_interval), dtype=str), np.repeat(set(), max_interval))
+    )
+
+    activity_dict = {
+        "all_joined": {},
+        "all_joined_day": all_joined,
+        "all_consistent": {},
+        "all_vital": {},
+        "all_active": {},
+        "all_connected": {},
+        "all_paused": {},
+        "all_new_disengaged": {},
+        "all_disengaged": {},
+        "all_unpaused": {},
+        "all_returned": {},
+        "all_new_active": {},
+        "all_still_active": {},
+        "all_dropped": {},
+        "all_disengaged_were_newly_active": {},
+        "all_disengaged_were_consistently_active": {},
+        "all_disengaged_were_vital": {},
+        "all_lurker": {},
+        "all_about_to_disengage": {},
+        "all_disengaged_in_past": {},
+        "all_inconsistent": {},
+        "all_new_consistent": {},
+        "all_new_vital": {},
+        "all_became_not_consistent": {},
+        "all_became_unvital": {},
+    }
+    memberactivites = activity_dict.keys()
+
     int_mat = {
         DiscordActivity.Reply: np.zeros((acc_count, acc_count)),
         DiscordActivity.Mention: np.zeros((acc_count, acc_count)),
         DiscordActivity.Reaction: np.zeros((acc_count, acc_count)),
     }
-
-    # `user_1` intracting with `user_2`
-    int_mat[DiscordActivity.Reaction][0, 1] = 2
+    int_mat[DiscordActivity.Reaction][0, 1] = 6
 
     activities = [
         DiscordActivity.Reaction,
@@ -115,16 +112,21 @@ def test_inconsistently_active():
             WINDOW_D=WINDOW_D,
             **activity_dict,
         )
+
         if w_i == 14:
             int_mat[DiscordActivity.Reaction][0, 1] = 0
+            int_mat[DiscordActivity.Reaction][0, 2] = 0
+            int_mat[DiscordActivity.Reaction][0, 3] = 0
+            int_mat[DiscordActivity.Reaction][0, 4] = 0
+            int_mat[DiscordActivity.Reaction][0, 5] = 0
+            int_mat[DiscordActivity.Reaction][0, 6] = 0
 
-        activity_dict = dict(zip(memberactivities, activity_dict))
+        activity_dict = dict(zip(memberactivites, activity_dict))
 
     print("all_consistent:", activity_dict["all_consistent"])
-    print("all_paused:", activity_dict["all_paused"])
-    print("all_inconsistent:", activity_dict["all_inconsistent"])
+    print("all_became_not_consistent:", activity_dict["all_became_not_consistent"])
 
-    assert activity_dict["all_inconsistent"] == {
+    assert activity_dict["all_became_not_consistent"] == {
         "0": set(),
         "1": set(),
         "2": set(),
@@ -132,20 +134,20 @@ def test_inconsistently_active():
         "4": set(),
         "5": set(),
         "6": set(),
-        "7": {"user0", "user1"},
-        "8": {"user0", "user1"},
-        "9": {"user0", "user1"},
-        "10": {"user0", "user1"},
-        "11": {"user0", "user1"},
-        "12": {"user0", "user1"},
-        "13": {"user0", "user1"},
-        "14": set(),  # was incluedd in all_paused here
-        "15": {"user0", "user1"},
-        "16": {"user0", "user1"},
-        "17": {"user0", "user1"},
-        "18": {"user0", "user1"},
-        "19": {"user0", "user1"},
-        "20": {"user0", "user1"},
+        "7": set(),
+        "8": set(),
+        "9": set(),
+        "10": set(),
+        "11": set(),
+        "12": set(),
+        "13": set(),
+        "14": set(),
+        "15": set(),
+        "16": set(),
+        "17": set(),
+        "18": set(),
+        "19": set(),
+        "20": set(),
         "21": set(),
         "22": set(),
         "23": set(),
@@ -153,4 +155,11 @@ def test_inconsistently_active():
         "25": set(),
         "26": set(),
         "27": set(),
+        "28": {"user0", "user1"},
+        "29": set(),
+        "30": set(),
+        "31": set(),
+        "32": set(),
+        "33": set(),
+        "34": set(),
     }

@@ -3,9 +3,9 @@ from tc_core_analyzer_lib.assess_engagement import EngagementAssessment
 from tc_core_analyzer_lib.utils.activity import DiscordActivity
 
 
-def test_inconsistently_active():
+def test_all_new_consistent():
     """
-    test conssitently_active members category
+    test all_new_consistent members category
     """
     acc_names = []
     acc_count = 5
@@ -122,9 +122,9 @@ def test_inconsistently_active():
 
     print("all_consistent:", activity_dict["all_consistent"])
     print("all_paused:", activity_dict["all_paused"])
-    print("all_inconsistent:", activity_dict["all_inconsistent"])
+    print("all_new_consistent:", activity_dict["all_new_consistent"])
 
-    assert activity_dict["all_inconsistent"] == {
+    assert activity_dict["all_new_consistent"] == {
         "0": set(),
         "1": set(),
         "2": set(),
@@ -132,20 +132,20 @@ def test_inconsistently_active():
         "4": set(),
         "5": set(),
         "6": set(),
-        "7": {"user0", "user1"},
-        "8": {"user0", "user1"},
-        "9": {"user0", "user1"},
-        "10": {"user0", "user1"},
-        "11": {"user0", "user1"},
-        "12": {"user0", "user1"},
-        "13": {"user0", "user1"},
-        "14": set(),  # was incluedd in all_paused here
-        "15": {"user0", "user1"},
-        "16": {"user0", "user1"},
-        "17": {"user0", "user1"},
-        "18": {"user0", "user1"},
-        "19": {"user0", "user1"},
-        "20": {"user0", "user1"},
+        "7": set(),
+        "8": set(),
+        "9": set(),
+        "10": set(),
+        "11": set(),
+        "12": set(),
+        "13": set(),
+        "14": {"user0", "user1"},
+        "15": set(),
+        "16": set(),
+        "17": set(),
+        "18": set(),
+        "19": set(),
+        "20": set(),
         "21": set(),
         "22": set(),
         "23": set(),

@@ -139,7 +139,7 @@ def test_inconsistently_active():
         "11": {"user0", "user1"},
         "12": {"user0", "user1"},
         "13": {"user0", "user1"},
-        "14": set(),  # was incluedd in all_paused here
+        "14": set(),
         "15": {"user0", "user1"},
         "16": {"user0", "user1"},
         "17": {"user0", "user1"},
@@ -154,3 +154,4 @@ def test_inconsistently_active():
         "26": set(),
         "27": set(),
     }
+    assert False is True

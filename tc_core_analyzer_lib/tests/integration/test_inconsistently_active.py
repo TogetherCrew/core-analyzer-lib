@@ -154,4 +154,3 @@ def test_inconsistently_active():
         "26": set(),
         "27": set(),
     }
-    assert False is True

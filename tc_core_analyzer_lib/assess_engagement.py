@@ -162,13 +162,23 @@ class EngagementAssessment:
         # # # CONSISTENTLY ACTIVE # # #
 
         all_consistent = assess_consistent(
-            all_active, w_i, act_param["CON_T_THR"], act_param["CON_O_THR"], WINDOW_D, all_consistent
+            all_active,
+            w_i,
+            act_param["CON_T_THR"],
+            act_param["CON_O_THR"],
+            WINDOW_D,
+            all_consistent,
         )
 
         # # # VITAL # # #
 
         all_vital = assess_vital(
-            all_connected, w_i, act_param["VITAL_T_THR"], act_param["VITAL_O_THR"], WINDOW_D, all_vital
+            all_connected,
+            w_i,
+            act_param["VITAL_T_THR"],
+            act_param["VITAL_O_THR"],
+            WINDOW_D,
+            all_vital,
         )
 
         # # # STILL ACTIVE # # #
@@ -246,7 +256,10 @@ class EngagementAssessment:
                 rem_new_disengaged[str(w_i)],
                 all_disengaged_were_vital[str(w_i)],
             ) = assess_overlap(
-                all_new_disengaged, all_vital, w_i, (act_param["PAUSED_T_THR"] + 1) * WINDOW_D
+                all_new_disengaged,
+                all_vital,
+                w_i,
+                (act_param["PAUSED_T_THR"] + 1) * WINDOW_D,
             )
 
             # assess who of the remaining disengaged accounts
@@ -255,7 +268,10 @@ class EngagementAssessment:
                 rem_new_disengaged[str(w_i)],
                 all_disengaged_were_consistently_active[str(w_i)],
             ) = assess_overlap(
-                rem_new_disengaged, all_consistent, w_i, (act_param["PAUSED_T_THR"] + 1) * WINDOW_D
+                rem_new_disengaged,
+                all_consistent,
+                w_i,
+                (act_param["PAUSED_T_THR"] + 1) * WINDOW_D,
             )
 
             # assess who of the remaining disengaged accounts
@@ -264,7 +280,10 @@ class EngagementAssessment:
                 rem_new_disengaged[str(w_i)],
                 all_disengaged_were_newly_active[str(w_i)],
             ) = assess_overlap(
-                rem_new_disengaged, all_new_active, w_i, (act_param["PAUSED_T_THR"] + 1) * WINDOW_D
+                rem_new_disengaged,
+                all_new_active,
+                w_i,
+                (act_param["PAUSED_T_THR"] + 1) * WINDOW_D,
             )
         else:
             all_disengaged_were_vital[str(w_i)] = set()

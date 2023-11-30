@@ -3,16 +3,19 @@ from tc_core_analyzer_lib.assess_engagement import EngagementAssessment
 from tc_core_analyzer_lib.utils.activity import DiscordActivity
 
 
-def test_disengaged_members():
+def test_all_new_consistent():
+    """
+    test all_new_consistent members category
+    """
     acc_names = []
-    acc_count = 10
-    for i in range(acc_count):
+    acc_count = 5
+    for i in range(5):
         acc_names.append(f"user{i}")
 
     acc_names = np.array(acc_names)
 
     # four weeks
-    max_interval = 50
+    max_interval = 28
 
     # preparing empty joined members dict
     all_joined = dict(
@@ -96,19 +99,16 @@ def test_disengaged_members():
             WINDOW_D=WINDOW_D,
             **activity_dict,
         )
+        if w_i == 14:
+            int_mat[DiscordActivity.Reaction][0, 1] = 0
 
         activity_dict = dict(zip(memberactivities, activity_dict))
 
-        # zeroing all the activities on day 29
-        # meaning we could have disengaged members on day (29 + 7) = 36
-        # 14 is two periods
-        if w_i == 28:
-            int_mat[DiscordActivity.Reaction][0, 1] = 0
+    print("all_consistent:", activity_dict["all_consistent"])
+    print("all_paused:", activity_dict["all_paused"])
+    print("all_new_consistent:", activity_dict["all_new_consistent"])
 
-    print("all_active", activity_dict["all_active"])
-    print("all_disengaged", activity_dict["all_disengaged"])
-
-    assert activity_dict["all_disengaged"] == {
+    assert activity_dict["all_new_consistent"] == {
         "0": set(),
         "1": set(),
         "2": set(),
@@ -123,7 +123,7 @@ def test_disengaged_members():
         "11": set(),
         "12": set(),
         "13": set(),
-        "14": set(),
+        "14": {"user0", "user1"},
         "15": set(),
         "16": set(),
         "17": set(),
@@ -137,26 +137,4 @@ def test_disengaged_members():
         "25": set(),
         "26": set(),
         "27": set(),
-        "28": set(),
-        "29": set(),
-        "30": set(),
-        "31": set(),
-        "32": set(),
-        "33": set(),
-        "34": set(),
-        "35": set(),
-        "36": {"user1", "user0"},
-        "37": {"user1", "user0"},
-        "38": {"user1", "user0"},
-        "39": {"user1", "user0"},
-        "40": {"user1", "user0"},
-        "41": {"user1", "user0"},
-        "42": {"user1", "user0"},
-        "43": {"user1", "user0"},
-        "44": {"user1", "user0"},
-        "45": {"user1", "user0"},
-        "46": {"user1", "user0"},
-        "47": {"user1", "user0"},
-        "48": {"user1", "user0"},
-        "49": {"user1", "user0"},
     }

@@ -1,18 +1,36 @@
+# test all_active members using the interaction matrix
 import numpy as np
 from tc_core_analyzer_lib.assess_engagement import EngagementAssessment
 from tc_core_analyzer_lib.utils.activity import DiscordActivity
 
 
-def test_disengaged_members():
+def test_all_became_unvital():
     acc_names = []
     acc_count = 10
+
+    act_param = {
+        "INT_THR": 1,
+        "UW_DEG_THR": 1,
+        "PAUSED_T_THR": 1,
+        "CON_T_THR": 4,
+        "CON_O_THR": 3,
+        "EDGE_STR_THR": 5,
+        "UW_THR_DEG_THR": 5,
+        "VITAL_T_THR": 4,
+        "VITAL_O_THR": 3,
+        "STILL_T_THR": 2,
+        "STILL_O_THR": 2,
+        "DROP_H_THR": 2,
+        "DROP_I_THR": 1,
+    }
+
     for i in range(acc_count):
         acc_names.append(f"user{i}")
 
     acc_names = np.array(acc_names)
 
     # four weeks
-    max_interval = 50
+    max_interval = 35
 
     # preparing empty joined members dict
     all_joined = dict(
@@ -46,32 +64,20 @@ def test_disengaged_members():
         "all_became_not_consistent": {},
         "all_became_unvital": {},
     }
-    memberactivities = activity_dict.keys()
-
-    act_param = {
-        "INT_THR": 1,
-        "UW_DEG_THR": 1,
-        "PAUSED_T_THR": 1,
-        "CON_T_THR": 4,
-        "CON_O_THR": 3,
-        "EDGE_STR_THR": 5,
-        "UW_THR_DEG_THR": 5,
-        "VITAL_T_THR": 4,
-        "VITAL_O_THR": 3,
-        "STILL_T_THR": 2,
-        "STILL_O_THR": 2,
-        "DROP_H_THR": 2,
-        "DROP_I_THR": 1,
-    }
+    memberactivites = activity_dict.keys()
 
     int_mat = {
         DiscordActivity.Reply: np.zeros((acc_count, acc_count)),
         DiscordActivity.Mention: np.zeros((acc_count, acc_count)),
         DiscordActivity.Reaction: np.zeros((acc_count, acc_count)),
     }
-
-    # `user_1` intracting with `user_2`
-    int_mat[DiscordActivity.Reaction][0, 1] = 2
+    # `user_0` intracting with `user_1`, `user_2`, `user_3`, `user_4`, `user_5`
+    int_mat[DiscordActivity.Reaction][0, 1] = 6
+    int_mat[DiscordActivity.Reaction][0, 2] = 6
+    int_mat[DiscordActivity.Reaction][0, 3] = 6
+    int_mat[DiscordActivity.Reaction][0, 4] = 6
+    int_mat[DiscordActivity.Reaction][0, 5] = 6
+    int_mat[DiscordActivity.Reaction][0, 6] = 6
 
     activities = [
         DiscordActivity.Reaction,
@@ -97,18 +103,20 @@ def test_disengaged_members():
             **activity_dict,
         )
 
-        activity_dict = dict(zip(memberactivities, activity_dict))
-
-        # zeroing all the activities on day 29
-        # meaning we could have disengaged members on day (29 + 7) = 36
-        # 14 is two periods
-        if w_i == 28:
+        if w_i == 14:
             int_mat[DiscordActivity.Reaction][0, 1] = 0
+            int_mat[DiscordActivity.Reaction][0, 2] = 0
+            int_mat[DiscordActivity.Reaction][0, 3] = 0
+            int_mat[DiscordActivity.Reaction][0, 4] = 0
+            int_mat[DiscordActivity.Reaction][0, 5] = 0
+            int_mat[DiscordActivity.Reaction][0, 6] = 0
 
-    print("all_active", activity_dict["all_active"])
-    print("all_disengaged", activity_dict["all_disengaged"])
+        activity_dict = dict(zip(memberactivites, activity_dict))
 
-    assert activity_dict["all_disengaged"] == {
+    print("all_consistent:", activity_dict["all_consistent"])
+    print("all_became_not_consistent:", activity_dict["all_became_not_consistent"])
+
+    assert activity_dict["all_became_not_consistent"] == {
         "0": set(),
         "1": set(),
         "2": set(),
@@ -137,26 +145,11 @@ def test_disengaged_members():
         "25": set(),
         "26": set(),
         "27": set(),
-        "28": set(),
+        "28": {"user0", "user1", "user2", "user3", "user4", "user5", "user6"},
         "29": set(),
         "30": set(),
         "31": set(),
         "32": set(),
         "33": set(),
         "34": set(),
-        "35": set(),
-        "36": {"user1", "user0"},
-        "37": {"user1", "user0"},
-        "38": {"user1", "user0"},
-        "39": {"user1", "user0"},
-        "40": {"user1", "user0"},
-        "41": {"user1", "user0"},
-        "42": {"user1", "user0"},
-        "43": {"user1", "user0"},
-        "44": {"user1", "user0"},
-        "45": {"user1", "user0"},
-        "46": {"user1", "user0"},
-        "47": {"user1", "user0"},
-        "48": {"user1", "user0"},
-        "49": {"user1", "user0"},
     }

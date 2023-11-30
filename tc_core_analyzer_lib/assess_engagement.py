@@ -15,6 +15,7 @@ from .utils.assessments import (  # isort: skip
     assess_remainder,
     assess_still_active,
     assess_vital,
+    assess_inconsistent,
 )
 from .utils.compute_interaction_per_acc import thr_int
 
@@ -74,6 +75,11 @@ class EngagementAssessment:
         all_lurker,
         all_about_to_disengage,
         all_disengaged_in_past,
+        all_inconsistent,
+        all_new_consistent,
+        all_new_vital,
+        all_became_not_consistent,
+        all_became_unvital,
     ):
         """
         Assess engagment levels for all active members in a time period
@@ -244,6 +250,11 @@ class EngagementAssessment:
             all_paused[str(w_i)] - all_consistent[str(w_i)]
         )
 
+        # # # INCONSISTENT
+        all_inconsistent[str(w_i)] = assess_inconsistent(
+            all_active, all_paused, all_new_active, all_consistent, w_i
+        )
+
         # # # SUBDIVIDE DISENGAGED TYPES # # #
 
         # make temporary dictionary for remaining disengaged members
@@ -290,6 +301,26 @@ class EngagementAssessment:
             all_disengaged_were_consistently_active[str(w_i)] = set()
             all_disengaged_were_newly_active[str(w_i)] = set()
 
+        # # # DETECT CHANGES SINCE LAST PERIOD # # #
+        if w_i - WINDOW_D >= 0:
+            all_new_consistent[str(w_i)] = (
+                all_consistent[str(w_i)] - all_consistent[str(w_i - WINDOW_D)]
+            )
+            all_new_vital[str(w_i)] = (
+                all_vital[str(w_i)] - all_vital[str(w_i - WINDOW_D)]
+            )
+            all_became_not_consistent[str(w_i)] = (
+                all_consistent[str(w_i - WINDOW_D)] - all_consistent[str(w_i)]
+            )
+            all_became_unvital[str(w_i)] = (
+                all_vital[str(w_i - WINDOW_D)] - all_vital[str(w_i)]
+            )
+        else:
+            all_new_consistent[str(w_i)] = set()
+            all_new_vital[str(w_i)] = set()
+            all_became_not_consistent[str(w_i)] = set()
+            all_became_unvital[str(w_i)] = set()
+
         return (
             graph,
             all_joined,
@@ -312,4 +343,9 @@ class EngagementAssessment:
             all_lurker,
             all_about_to_disengage,
             all_disengaged_in_past,
+            all_inconsistent,
+            all_new_consistent,
+            all_new_vital,
+            all_became_not_consistent,
+            all_became_unvital,
         )

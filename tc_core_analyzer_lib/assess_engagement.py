@@ -101,35 +101,36 @@ class EngagementAssessment:
             containing a list of all account names belonging to engagement
             category *
 
-        act_param : list[int]
+        act_param : dict[str, int]
             parameters for activity types:
-        INT_THR : int
-            minimum number of interactions to be active
-        UW_DEG_THR : int
-            minimum number of connections to be active
-        EDGE_STR_THR : int
-            minimum number of interactions for connected
-        UW_THR_DEG_THR : int
-            minimum number of accounts for connected
-        CON_T_THR : int
-            time period to assess consistently active
-        CON_O_THR : int
-            times to be active within CON_T_THR to be
-            consistently active
-        VITAL_T_THR : int
-            time period to assess for vital
-        VITAL_O_THR : int
-            times to be connected within VITAL_T_THR to be vital
-        PAUSED_T_THR : int
-            time period to remain paused
-        STILL_T_THR : int
-            time period to assess for still active
-        STILL_O_THR : int
-            times to be active within STILL_T_THR to be still active
-        DROP_H_THR : int
-            time periods in the past to have been newly active
-        DROP_I_THR : int
-            time periods to have been inactive
+            keys are listed below
+                - INT_THR : int
+                    minimum number of interactions to be active
+                - UW_DEG_THR : int
+                    minimum number of connections to be active
+                - EDGE_STR_THR : int
+                    minimum number of interactions for connected
+                - UW_THR_DEG_THR : int
+                    minimum number of accounts for connected
+                - CON_T_THR : int
+                    time period to assess consistently active
+                - CON_O_THR : int
+                    times to be active within CON_T_THR to be
+                consistently active
+                - VITAL_T_THR : int
+                    time period to assess for vital
+                - VITAL_O_THR : int
+                    times to be connected within VITAL_T_THR to be vital
+                - PAUSED_T_THR : int
+                    time period to remain paused
+                - STILL_T_THR : int
+                    time period to assess for still active
+                - STILL_O_THR : int
+                    times to be active within STILL_T_THR to be still active
+                - DROP_H_THR : int
+                    time periods in the past to have been newly active
+                - DROP_I_THR : int
+                    time periods to have been inactive
 
         Returns:
         ---------
@@ -147,10 +148,10 @@ class EngagementAssessment:
         # # # THRESHOLD INTERACTIONS # # #
         thr_ind, thr_uw_deg, thr_uw_thr_deg, graph = thr_int(
             int_mat,
-            act_param[0],
-            act_param[1],
-            act_param[5],
-            act_param[6],
+            act_param["INT_THR"],
+            act_param["UW_DEG_THR"],
+            act_param["EDGE_STR_THR"],
+            act_param["UW_THR_DEG_THR"],
             activities=self.activities,
             ignore_axis_0_activities=self.activities_ignore_0_axis,
             ignore_axis_1_activities=self.activities_ignore_1_axis,
@@ -167,13 +168,23 @@ class EngagementAssessment:
         # # # CONSISTENTLY ACTIVE # # #
 
         all_consistent = assess_consistent(
-            all_active, w_i, act_param[3], act_param[4], WINDOW_D, all_consistent
+            all_active,
+            w_i,
+            act_param["CON_T_THR"],
+            act_param["CON_O_THR"],
+            WINDOW_D,
+            all_consistent,
         )
 
         # # # VITAL # # #
 
         all_vital = assess_vital(
-            all_connected, w_i, act_param[7], act_param[8], WINDOW_D, all_vital
+            all_connected,
+            w_i,
+            act_param["VITAL_T_THR"],
+            act_param["VITAL_O_THR"],
+            WINDOW_D,
+            all_vital,
         )
 
         # # # STILL ACTIVE # # #
@@ -182,8 +193,8 @@ class EngagementAssessment:
             all_new_active,
             all_active,
             w_i,
-            act_param[9],
-            act_param[10],
+            act_param["STILL_T_THR"],
+            act_param["STILL_O_THR"],
             WINDOW_D,
             all_still_active,
         )
@@ -194,8 +205,8 @@ class EngagementAssessment:
             all_new_active,
             all_active,
             w_i,
-            act_param[11],
-            act_param[12],
+            act_param["DROP_H_THR"],
+            act_param["DROP_I_THR"],
             WINDOW_D,
             all_dropped,
         )
@@ -214,7 +225,7 @@ class EngagementAssessment:
             all_active,
             w_i,
             WINDOW_D,
-            act_param[2],
+            act_param["PAUSED_T_THR"],
             all_new_active,
             all_unpaused,
             all_returned,
@@ -256,7 +267,10 @@ class EngagementAssessment:
                 rem_new_disengaged[str(w_i)],
                 all_disengaged_were_vital[str(w_i)],
             ) = assess_overlap(
-                all_new_disengaged, all_vital, w_i, (act_param[2] + 1) * WINDOW_D
+                all_new_disengaged,
+                all_vital,
+                w_i,
+                (act_param["PAUSED_T_THR"] + 1) * WINDOW_D,
             )
 
             # assess who of the remaining disengaged accounts
@@ -265,7 +279,10 @@ class EngagementAssessment:
                 rem_new_disengaged[str(w_i)],
                 all_disengaged_were_consistently_active[str(w_i)],
             ) = assess_overlap(
-                rem_new_disengaged, all_consistent, w_i, (act_param[2] + 1) * WINDOW_D
+                rem_new_disengaged,
+                all_consistent,
+                w_i,
+                (act_param["PAUSED_T_THR"] + 1) * WINDOW_D,
             )
 
             # assess who of the remaining disengaged accounts
@@ -274,7 +291,10 @@ class EngagementAssessment:
                 rem_new_disengaged[str(w_i)],
                 all_disengaged_were_newly_active[str(w_i)],
             ) = assess_overlap(
-                rem_new_disengaged, all_new_active, w_i, (act_param[2] + 1) * WINDOW_D
+                rem_new_disengaged,
+                all_new_active,
+                w_i,
+                (act_param["PAUSED_T_THR"] + 1) * WINDOW_D,
             )
         else:
             all_disengaged_were_vital[str(w_i)] = set()

@@ -5,6 +5,7 @@ import numpy.typing as npt
 from networkx import DiGraph
 
 from .generate_graph import make_graph
+from utils.activity import DiscordActivity
 
 
 def thr_int(
@@ -72,6 +73,7 @@ def thr_int(
     else:
         ignore_axis_1_activities = kwargs["ignore_axis_1_activities"]
 
+    # int_analysis is for all actions and interactions
     int_analysis = get_analysis_vector(
         int_mat=int_mat,
         activites=activities,
@@ -83,10 +85,16 @@ def thr_int(
     # all the activities has the same interaction matrix
     # with the same shape
     matrix = np.zeros_like(int_mat[activities[0]])
+    interaction_matrix = np.zeros_like(int_mat[activities[0]])
 
     for activity in activities:
+        if activity in [DiscordActivity.Reaction, DiscordActivity.Mention, DiscordActivity.Reaction]:
+            interaction_matrix += int_mat[activity]
+        
+        # matrix for action and interactions
         matrix += int_mat[activity]
 
+    interaction_graph = make_graph(interaction_matrix)
     graph = make_graph(matrix)
 
     # # # TOTAL INTERACTIONS # # #
@@ -97,27 +105,24 @@ def thr_int(
     # # # TOTAL CONNECTIONS # # #
 
     # get unweighted node degree value for each node
-    all_degrees = np.array([val for (node, val) in graph.degree()])
+    all_degrees = np.array([val for (_, val) in graph.degree()])
 
     # compare total unweighted node degree to interaction threshold
     thr_uw_deg = np.where(all_degrees >= UW_DEG_THR)[0]
 
     # # # THRESHOLDED CONNECTIONS # # #
 
-    # make copy of graph for thresholding
-    thresh_graph = copy.deepcopy(graph)
-
     # remove edges below threshold from copy
-    thresh_graph.remove_edges_from(
+    interaction_graph.remove_edges_from(
         [
             (n1, n2)
-            for n1, n2, w in thresh_graph.edges(data="weight")
+            for n1, n2, w in interaction_graph.edges(data="weight")
             if w < EDGE_STR_THR
         ]
     )
 
     # get unweighted node degree value for each node from thresholded network
-    all_degrees_thresh = np.array([val for (node, val) in thresh_graph.degree()])
+    all_degrees_thresh = np.array([val for (_, val) in interaction_graph.degree()])
 
     # compare total unweighted node degree after thresholding to threshold
     thr_uw_thr_deg = np.where(all_degrees_thresh > UW_THR_DEG_THR)[0]

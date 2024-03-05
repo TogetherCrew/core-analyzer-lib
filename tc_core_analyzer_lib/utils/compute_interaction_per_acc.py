@@ -1,11 +1,9 @@
-import copy
-
 import numpy as np
 import numpy.typing as npt
 from networkx import DiGraph
 
 from .generate_graph import make_graph
-from utils.activity import DiscordActivity
+from .activity import DiscordActivity
 
 
 def thr_int(

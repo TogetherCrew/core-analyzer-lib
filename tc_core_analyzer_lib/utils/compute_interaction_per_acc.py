@@ -111,7 +111,7 @@ def thr_int(
     # preparing matrix with no `action` and just interactions
     # actions were self-intereaction and are on diagonal
     matrix_interaction = copy.deepcopy(matrix)
-    matrix_interaction[np.diag_indices_from[matrix_interaction]] = 0
+    matrix_interaction[np.diag_indices_from(matrix_interaction)] = 0
     graph_interaction = make_graph(matrix_interaction)
 
     # get unweighted node degree value for each node from interaction network

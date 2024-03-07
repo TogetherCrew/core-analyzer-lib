@@ -5,6 +5,7 @@ class BaseActivity:
 
     Reply: str = "reply"
     Mention: str = "mention"
+    Reaction: str = "reaction"
 
 
 class DiscordActivity:
@@ -14,4 +15,6 @@ class DiscordActivity:
 
     Reply: str = BaseActivity.Reply
     Mention: str = BaseActivity.Mention
-    Reaction: str = "reaction"
+    Reaction: str = BaseActivity.Reaction
+    Thread_msg: str = "thr_message"
+    Lone_msg: str = "lone_message"

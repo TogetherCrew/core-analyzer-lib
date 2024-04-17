@@ -103,10 +103,14 @@ def thr_int(
     graph_interaction = make_graph(matrix_interaction)
 
     # filtering the `at least interaction count` from the graph
-    graph_interaction_thresh = remove_edges_below_threshold(graph_interaction, EDGE_STR_THR)
+    graph_interaction_thresh = remove_edges_below_threshold(
+        graph_interaction, EDGE_STR_THR
+    )
 
     # get unweighted node degree value for each node from interaction network
-    all_degrees_thresh = np.array([val for (_, val) in graph_interaction_thresh.degree()])
+    all_degrees_thresh = np.array(
+        [val for (_, val) in graph_interaction_thresh.degree()]
+    )
 
     # compare total unweighted node degree after thresholding to threshold
     thr_uw_thr_deg = np.where(all_degrees_thresh > UW_THR_DEG_THR)[0]
@@ -115,18 +119,18 @@ def thr_int(
 
 
 def remove_edges_below_threshold(
-        graph: DiGraph, EDGE_STR_THR: int, weight_name: str = "weight"
-    ) -> DiGraph:
+    graph: DiGraph, EDGE_STR_THR: int, weight_name: str = "weight"
+) -> DiGraph:
     """
     remove the edges that has a weight below the threshold
     """
     graph_copy = copy.deepcopy(graph)
     graph_copy.remove_edges_from(
-            [
-                (n1, n2)
-                for n1, n2, w in graph_copy.edges(data=weight_name)
-                if w < EDGE_STR_THR
-            ]
+        [
+            (n1, n2)
+            for n1, n2, w in graph_copy.edges(data=weight_name)
+            if w < EDGE_STR_THR
+        ]
     )
     return graph_copy
 

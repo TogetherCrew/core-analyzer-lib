@@ -96,31 +96,43 @@ def thr_int(
 
     # # # THRESHOLDED CONNECTIONS # # #
 
-    # make copy of graph for thresholding
-    thresh_graph = copy.deepcopy(graph)
-
-    # remove edges below threshold from copy
-    thresh_graph.remove_edges_from(
-        [
-            (n1, n2)
-            for n1, n2, w in thresh_graph.edges(data="weight")
-            if w < EDGE_STR_THR
-        ]
-    )
-
     # preparing matrix with no `action` and just interactions
     # actions were self-intereaction and are on diagonal
     matrix_interaction = copy.deepcopy(matrix)
     matrix_interaction[np.diag_indices_from(matrix_interaction)] = 0
     graph_interaction = make_graph(matrix_interaction)
 
+    # filtering the `at least interaction count` from the graph
+    graph_interaction_thresh = remove_edges_below_threshold(
+        graph_interaction, EDGE_STR_THR
+    )
+
     # get unweighted node degree value for each node from interaction network
-    all_degrees_thresh = np.array([val for (_, val) in graph_interaction.degree()])
+    all_degrees_thresh = np.array(
+        [val for (_, val) in graph_interaction_thresh.degree()]
+    )
 
     # compare total unweighted node degree after thresholding to threshold
     thr_uw_thr_deg = np.where(all_degrees_thresh > UW_THR_DEG_THR)[0]
 
     return (thr_ind, thr_uw_deg, thr_uw_thr_deg, graph)
+
+
+def remove_edges_below_threshold(
+    graph: DiGraph, EDGE_STR_THR: int, weight_name: str = "weight"
+) -> DiGraph:
+    """
+    remove the edges that has a weight below the threshold
+    """
+    graph_copy = copy.deepcopy(graph)
+    graph_copy.remove_edges_from(
+        [
+            (n1, n2)
+            for n1, n2, w in graph_copy.edges(data=weight_name)
+            if w < EDGE_STR_THR
+        ]
+    )
+    return graph_copy
 
 
 def get_analysis_vector(
